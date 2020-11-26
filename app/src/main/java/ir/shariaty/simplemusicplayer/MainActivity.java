@@ -84,6 +84,68 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btFf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get current Position
+                int currentPosition = mediaPlayer.getCurrentPosition();
+                // get Duration Media Player
+                int duration = mediaPlayer.getDuration();
+                // Check Condition
+                if (mediaPlayer.isPlaying() && duration != currentPosition) {
+                    currentPosition = currentPosition + 5000;
+                    playerPosition.setText(convertFormat(currentPosition));
+                    // Set Progress on seekbar
+                    mediaPlayer.seekTo(currentPosition);
+                }
+            }
+        });
+
+        btRew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentPosition = mediaPlayer.getCurrentPosition();
+                // Check Condition
+                if (mediaPlayer.isPlaying() && currentPosition > 5000) {
+                    currentPosition = currentPosition - 5000;
+                    playerPosition.setText(convertFormat(currentPosition));
+                    mediaPlayer.seekTo(currentPosition);
+                }
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if  (fromUser) {
+                    // Drag Seek Bar
+                    mediaPlayer.seekTo(progress);
+                }
+
+                playerPosition.setText(convertFormat(mediaPlayer.getCurrentPosition()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                // Hide Pause Button
+                btPause.setVisibility(View.GONE);
+                btPlay.setVisibility(View.VISIBLE);
+                mediaPlayer.seekTo(0);
+            }
+        });
+
     }
 
     @SuppressLint("DefaultLocale")
