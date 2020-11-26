@@ -94,3 +94,4 @@ public class MainActivity extends AppCompatActivity {
                   TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
     }
 }
+// test for Git
